@@ -1,0 +1,37 @@
+.red-alert {
+    color: red;
+}
+.green-alert {
+    color: green;
+}
+select {
+    max-width: 300px;
+    display: block;
+}
+.hide {
+    display: none;
+}
+.loadtable tr {
+    height: 50px;
+}
+.loadtable td {
+    width: 100px;
+}
+.loadtable tr td {
+    border: 2px solid grey;
+    text-align: center;
+}
+.char-image {
+    width: 100px;
+    margin: 20px;
+}
+.charchar {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.charstats {
+}
+.center {
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            Search for a stock quote
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Insert Stock Symbol" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Confirm</button>
+        <div class="mb-3">
+            Stock symbol: {{ symbol }}
+        </div>
+        <div class="mb-3">
+            Stock name: {{ name }}
+        </div>
+        <div class="mb-3">
+            Current price: {{ price }}
+        </div>
+    </form>
+{% endblock %}

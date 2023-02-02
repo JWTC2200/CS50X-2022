@@ -1,0 +1,51 @@
+Id,user,artset,slot,mainstat,mainvalue,hpf,hpp,attk,attkp,deff,defp,crtt,crdd,em,er
+1,1,Gladiators,Flower,Health,4780,0,0,0,0,0,0,10,10,10,10
+2,1,Wanderers,Feather,Attack,311,0,0,0,10,0,0,10,10,10,0
+3,1,Emblem,Sands,Attack%,46.6,0,0,0,0,0,10,10,10,10,0
+4,1,Shimenawa,Goblet,Attack%,46.6,0,0,10,0,10,10,10,0,0,0
+5,1,Gladiators,Circlet,Health%,46.6,0,0,10,0,10,0,10,0,10,0
+6,1,Wanderers,Flower,Health,4780,10,0,0,0,0,0,0,10,10,10
+7,1,Emblem,Feather,Attack,311,0,0,0,10,10,10,10,0,0,0
+8,1,Shimenawa,Sands,Attack%,46.6,0,0,0,0,0,0,10,10,10,10
+9,1,Gladiators,Goblet,Elemental DMG,Anemo,10,10,10,10,0,0,0,0,0,0
+10,1,Wanderers,Circlet,Health%,46.6,10,0,10,0,10,0,10,0,0,0
+11,1,Emblem,Flower,Health,4780,0,10,0,10,0,0,0,0,10,10
+12,1,Shimenawa,Feather,Attack,311,0,10,10,10,10,0,0,0,0,0
+13,1,Gladiators,Sands,Attack%,46.6,10,10,10,0,10,0,0,0,0,0
+14,1,Wanderers,Goblet,Elemental DMG,Cryo,0,10,10,10,10,0,0,0,0,0
+15,1,Emblem,Circlet,Crit Rate,31.1,10,0,10,0,10,0,0,10,0,0
+16,1,Shimenawa,Flower,Health,4780,10,0,0,10,0,10,0,0,0,10
+17,1,Gladiators,Feather,Attack,311,10,10,10,10,0,0,0,0,0,0
+18,1,Wanderers,Sands,Elemental Mastery,186.5,0,0,0,10,10,10,10,0,0,0
+19,1,Emblem,Goblet,Elemental DMG,Pyro,0,0,10,10,10,10,0,0,0,0
+20,1,Shimenawa,Circlet,Crit Rate,31.1,0,10,0,10,0,10,0,0,10,0
+21,2,Gladiators,Flower,Health,4780,0,10,0,10,0,10,0,10,0,0
+22,2,Wanderers,Feather,Attack,311,0,0,0,0,0,0,10,10,10,10
+23,2,Emblem,Sands,Elemental Mastery,186.5,0,0,0,0,10,10,10,10,0,0
+24,2,Shimenawa,Goblet,Elemental DMG,Geo,0,0,0,10,10,10,10,0,0,0
+25,2,Gladiators,Circlet,Crit Damage,62.2,0,0,0,0,10,10,10,0,10,0
+26,2,Wanderers,Flower,Health,4780,0,0,10,0,10,0,10,0,10,0
+27,2,Emblem,Feather,Attack,311,0,0,0,0,0,10,10,10,0,10
+28,2,Shimenawa,Sands,Energy Recharge,51.8,0,0,0,0,0,10,10,10,10,0
+29,2,Gladiators,Goblet,Elemental DMG,Hydro,0,0,0,0,10,10,10,10,0,0
+30,2,Wanderers,Circlet,Crit Damage,62.2,0,10,0,10,0,0,10,0,0,10
+31,2,Emblem,Flower,Health,4780,0,0,0,10,0,10,0,10,0,10
+32,2,Shimenawa,Feather,Attack,311,0,0,0,0,10,10,10,10,0,0
+33,2,Gladiators,Sands,Energy Recharge,51.8,10,10,10,10,0,0,0,0,0,0
+34,2,Wanderers,Goblet,Elemental DMG,Dendro,0,0,0,0,0,10,10,10,10,0
+35,2,Emblem,Circlet,Elemental Mastery,186.5,10,10,10,10,0,0,0,0,0,0
+36,2,Shimenawa,Flower,Health,4780,10,0,10,0,10,0,10,0,0,0
+37,3,Gladiators,Feather,Attack,311,10,10,10,10,0,0,0,0,0,0
+38,3,Wanderers,Sands,Health%,46.6,0,0,0,10,0,10,0,10,0,10
+39,3,Emblem,Goblet,Elemental DMG,Physical,0,0,0,0,0,0,10,10,10,10
+40,3,Shimenawa,Circlet,Elemental Mastery,186.5,0,10,10,10,10,0,0,0,0,0
+41,3,Gladiators,Flower,Health,4780,0,10,0,10,0,10,0,10,0,0
+42,3,Wanderers,Feather,Attack,311,0,10,10,10,10,0,0,0,0,0
+43,3,Emblem,Sands,Health%,46.6,0,0,0,0,10,10,10,0,10,0
+44,3,Shimenawa,Goblet,Elemental DMG,Electro,10,0,0,0,0,0,0,10,10,10
+45,3,Gladiators,Circlet,Healing Bonus,35.9,10,10,10,10,0,0,0,0,0,0
+46,3,Wanderers,Flower,Health,4780,0,0,10,0,10,0,10,0,10,0
+47,3,Emblem,Feather,Attack,311,0,0,0,10,10,10,10,0,0,0
+48,3,Shimenawa,Sands,Defence%,58.3,0,0,10,0,10,0,0,10,0,10
+49,3,Gladiators,Goblet,Elemental Mastery,186.5,0,0,10,10,10,10,0,0,0,0
+50,3,Wanderers,Circlet,Healing Bonus,35.9,0,0,0,10,10,10,10,0,0,0

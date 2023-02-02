@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Manage
+{% endblock %}
+
+{% block main %}
+    <form action="/manage" method="post">
+        <div class="mb-3">
+            Manage funds in CS50 finance!
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="value" name="value" placeholder="Enter value" type="number">
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="manage" type="text">
+                <option value="" disabled selected>Please select</option>
+                <option value="addfunds">Add funds</option>
+                <option value="withdraw">Withdraw funds</option>
+            </select>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="submit">Confirm</button>
+    </form>
+{% endblock %}

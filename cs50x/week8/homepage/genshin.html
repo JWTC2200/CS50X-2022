@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script>
+            function showhide(char1) {
+                var char2 = document.getElementById(char1)
+                var hide = document.getElementsByClassName('char_div')
+                for(var i = 0; i < hide.length; ++i) {
+                    var hide2 = hide[i]
+                    hide2.style.display = 'none';
+                }
+                char2.style.display = "block";
+            }
+        </script>
+        <link href="styles.css" rel="stylesheet">
+        <title>Genshin Impact</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="genshin_bg">
+        <div class="container p_back">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="index.html">HOMEPAGE</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link" href="genshin.html">Genshin Impact</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="dota2.html">Dota 2</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="aoe2.html">Age of Empires 2</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </div>
+        <div class="container p_back">
+            <br>
+            <h1 class="page_title">Genshin Impact</h1>
+            <hr>
+            <div class="container">
+                <p>Genshin Impact is an action role-playing game developed and published by miHoYo. It was released for Microsoft Windows, PlayStation 4, iOS, and Android in 2020, and on PlayStation 5 in 2021, and is set for release on Nintendo Switch. The game features an anime-style open-world environment and an action-based battle system using elemental magic and character-switching. The game is free-to-play and is monetized through gacha game mechanics through which players can obtain new characters and weapons. The base game is expanded regularly through patches using the games as a service model.</p>
+                <p>Genshin Impact takes place in the fantasy world of Teyvat, home to seven nations, each of which is tied to a different element and ruled by a different god. The story follows the Traveler, who has traveled across countless worlds with their twin sibling before becoming separated in Teyvat. The Traveler travels in search of the lost sibling with their companion Paimon and becomes involved in the affairs of Teyvat's nations.</p>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select another character</button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li class="dropdown-item" onclick="showhide('ganyu')">Ganyu</li>
+                  <li class="dropdown-item" onclick="showhide('yelan')">Yelan</li>
+                  <li class="dropdown-item" onclick="showhide('yae_miko')">Yae Miko</li>
+                </ul>
+            </div>
+            <hr>
+            <div class="container char_div" id="ganyu">
+                <h2>Ganyu</h2>
+                <img src="/Images/Genshin_Ganyu.jpg" class="char_img" >
+                <p>For the Liyue Qixing of the lofty Yujing Terrace, Ganyu is not merely a companion to serve them, but is instead coordinator of the web of information that moves across Liyue Harbor, and the architect of administrative efficiency</p>
+                <p>Complex meeting minutes, disorderly report data... Every day piles of documents flow by like water, each one personally compiled by her into clear and concise words in order to assist the Qixing's every decision and negotiation as they flow through various organizational departments.</p>
+                <p>In the eons that have gone by, the Qixing have changed with each succession of their posts, while only Ganyu has lived to see the flourishing of Liyue Harbor from beginning to the modern day.</p>
+                <p>The human blood that runs through her veins makes her reluctant to leave the splendor of the city lights, while her adeptus side leads her to yearn for the gentle serenity of her adeptal homeland.</p>
+                <p>For the half-human, half-adeptus Ganyu, between the bustling sea of people and the ethereal clustered peaks, which is more fitting to call home? </p>
+            </div>
+            <div class="container char_div" id="yelan">
+                <h2>Yelan</h2>
+                <img src="/Images/Genshin_Yelan.jpg" class="char_img">
+                <P>Yelan's identity has always been a mystery.</P>
+                <p>Like a phantom, she often appears in various guises at the center of events, and disappears before the storm stops.</p>
+                <p>The people who are caught up in trouble look forward to meeting her. For some reason, most of them think she will help them, and if not, they want her to be their ally.</p>
+                <p>But the problem is, their opponents harbor the same idea.</p>
+                <p>Every one of these people has met a Yelan who goes by a different name and identity, and each of them thinks they can reach a partnership with her. However, everyone has been kept in the dark.</p>
+                <p>Who does she want to help? When will she tell the truth?</p>
+                <p>Once she acts and intervenes, nothing can be trusted.</p>
+                <p>When she reveals her true identity and speaks the truth, those who are eager for answers may not have the chance to hear it.</p>
+            </div>
+            <div class="container char_div" id="yae_miko">
+                <h2>Yae Miko</h2>
+                <img src="/Images/Genshin_Yae_Miko.jpg" class="char_img">
+                <p>The Grand Narukami Shrine's head shrine maiden and a descendant of Kitsune lineage, Eternity's servant and friend... and the intimidating editor-in-chief of Yae Publishing House, a publisher of light novels.</p>
+                <p>There's no need to uncover her every facet, as they are all reflective of Yae Miko. Yet, all the same, they are not revealing of her true nature.</p>
+                <p>Like fragments of a mirror, each attitude reflects a different version of her. By being enveloped in many identities, she has become a brilliant diamond surrounded by countless mirrors.</p>
+                <p>There are hundreds of facets: solemn or cheerful, sympathetic or aloof.</p>
+                <p>No one knows the truth, just as how no one can easily spot a kitsune brushing past passers-by in the mystic woods.</p>
+                <p>But if the kitsune watches humans, where will her destiny lead?</p>
+            </div>
+        </div>
+    </body>
+</html>

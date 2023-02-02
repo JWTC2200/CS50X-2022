@@ -1,0 +1,11 @@
+sort1 uses: Bubble sort
+
+How do you know?: Time used for sort is decreased drastically as the data is more organised.
+
+sort2 uses: Merge sort
+
+How do you know?: Time used for each sort the same whether the data is organised or not but it is much faster than the other two for randomised data.
+
+sort3 uses: Selection sort
+
+How do you know?: Time used for each sort is the same no matter how the data is organised. 

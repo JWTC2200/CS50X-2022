@@ -1,0 +1,5 @@
+id,name,type,base,mainstat,mainvalue,substat,subvalue
+1,Amos Bow,Bow,608,Attack%,49.6,none,0
+2,Skyward Harp,Bow,674,Crit Rate,22.1,Crit Damage,20.00
+3,Kaguras Verity,Catalyst,608,Crit Damage,66.2,none,0
+4,Skyward Atlas,Catalyst,674,Attack%,33.1,Elemental Damage,12

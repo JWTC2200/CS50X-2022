@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <form action="/sell" method="post">
+        <div class="form-group">
+            <select class="form-control" name="symbol" type="text">
+                <option value="" disabled selected>Symbol</option>
+                {% for stock in index %}
+                    <option value= "{{stock['symbol']}}"> {{stock['symbol']}} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="shares" name="shares" placeholder="Number of shares to sell" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Confirm</button>
+    </form>
+    <hr>
+    <div class="container-fluid text-center">
+        <table class="table">
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Current Price</th>
+                <th>TOTAL</th>
+            </tr>
+            {% for stock in index %}
+            <tr>
+                <td>{{ stock["symbol"] }}</td>
+                <td>{{ stock["name"] }}</td>
+                <td>{{ stock["shares"] }}</td>
+                <td>{{ stock["current"] }}</td>
+                <td>{{ stock["total"] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

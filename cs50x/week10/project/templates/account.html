@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form action="/account" method="post">
+            Do you wish to delete your account and all submitted artifacts?
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password"type="password">
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="confirm" name="confirm" placeholder="Confirm Password" type="password">
+            <br>
+            {{warning}}
+            <br>
+            <button class="btn btn-danger" type="submit">Submit</button>
+        </form>
+    </div>
+
+
+{% endblock %}
+l

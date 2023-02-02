@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Submit Artifacts
+{% endblock %}
+
+{% block main %}
+
+
+    <div class="container">
+        <form action="/submit" method="post">
+            <div class="mb-3">
+                Submit your artifact into the database
+            </div>
+            <div class="input-group">
+                <select class="form-control mx-auto w-auto" id="slot" name="slot" type="text" onchange="change();">
+                    <option value="" disabled selected>Artifact slot</option>
+                    <option value="flower">Flower</option>
+                    <option value="feather">Feather</option>
+                    <option value="sands">Sands</option>
+                    <option value="goblet">Goblet</option>
+                    <option value="circlet">Circlet</option>
+                </select>
+            </div>
+            <div id="grouping" hidden>
+                <table class="table table-striped table-dark">
+                    <tr>
+                        <td>Main Stat</td>
+                        <td>
+                            <select class="form-control mx-auto" id="mainstat" name="mainstat" type="text" onchange="goblet_check();"></select>
+                        </td>
+                        <td>
+                            <select class="form-control mx-auto hide" id="mainstat_value" name="mainstat_value" type="text" ></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sub Stat 1</td>
+                        <td>
+                            <select class="form-control mx-auto" id="substat1" name="substat1" type="text"></select>
+                        </td>
+                        <td>
+                            <input class="form-control mx-auto" id="substat1-value" name="substat1-value" placeholder="Enter value" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sub Stat 2</td>
+                        <td>
+                            <select class="form-control mx-auto" id="substat2" name="substat2" type="text"></select>
+                        </td>
+                        <td>
+                            <input class="form-control mx-auto" id="substat2-value" name="substat2-value" placeholder="Enter value" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sub Stat 3</td>
+                        <td>
+                            <select class="form-control mx-auto" id="substat3" name="substat3" type="text"></select>
+                        </td>
+                        <td>
+                            <input class="form-control mx-auto" id="substat3-value" name="substat3-value" placeholder="Enter value" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sub Stat 4</td>
+                        <td>
+                            <select class="form-control mx-auto" id="substat4" name="substat4" type="text"></select>
+                        </td>
+                        <td>
+                            <input class="form-control mx-auto" id="substat4-value" name="substat4-value" placeholder="Enter value" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Artifact Set</td>
+                        <td class="setmid">
+                            <select class="form-control mx-auto" id="sets" name="sets" type="text"></select>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary" type="submit">Submit Artifact</button>
+            </div>
+        </form>
+    </div>
+    <script>
+
+        var select = document.getElementById("mainstat");
+
+        const slot_stats = {
+            flower: ["Health"],
+            feather: ["Attack"],
+            sands: ["Health%", "Attack%", "Defence%", "Elemental Mastery", "Energy Recharge"],
+            goblet: ["Health%", "Attack%", "Defence%", "Elemental Mastery", "Energy Recharge", "Elemental DMG"],
+            circlet: ["Health%", "Attack%", "Defence%", "Elemental Mastery", "Crit Rate", "Crit Damage", "Healing Bonus"],
+        }
+
+        const sub_stats = ["Health", "Health%", "Attack", "Attack%", "Crit Rate", "Crit Damage", "Defence", "Defence%", "Elemental Mastery", "Energy Recharge",];
+        const elemental_types = ["Anemo", "Cryo", "Dendro", "Electro", "Geo", "Hydro", "Pyro",];
+        const set_types = {{supported_artifact_sets|safe}}
+
+        function change() {
+            var main_slot = document.getElementById("slot").value;
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+            change_mainstat(main_slot);
+            change_substat("substat1");
+            change_substat("substat2");
+            change_substat("substat3");
+            change_substat("substat4");
+            change_sets();
+            document.getElementById("grouping").hidden = false;
+        }
+
+
+        function change_mainstat(slot) {
+            for (var i = 0; i < slot_stats[slot].length; i++) {
+                var list = slot_stats[slot][i];
+                var add_option = document.createElement("option");
+                add_option.textContent = list;
+                add_option.value = list;
+                select.appendChild(add_option);
+            }
+        }
+
+        function change_substat(sub_id) {
+            var sub_menu = document.getElementById(sub_id);
+            while (sub_menu.firstChild) {
+                sub_menu.removeChild(sub_menu.firstChild);
+            }
+            for (var i = 0; i < sub_stats.length; i++) {
+                var list = sub_stats[i];
+                var add_option = document.createElement("option");
+                add_option.textContent = list;
+                add_option.value = list;
+                sub_menu.appendChild(add_option);
+            }
+        }
+
+        function goblet_check() {
+            var goblet = document.getElementById("mainstat").value;
+            var goblet_menu = document.getElementById("mainstat_value");
+            goblet_menu.style.display = "none";
+            if (goblet == "Elemental DMG") {
+                elements(goblet_menu);
+            }
+        }
+
+
+        function elements(goblet) {
+            goblet.style.display = "block";
+            while (goblet.firstChild) {
+                goblet.removeChild(goblet.firstChild);
+            }
+            for (var i = 0; i < elemental_types.length; i++) {
+                var list = elemental_types[i];
+                var add_option = document.createElement("option");
+                add_option.textContent = list;
+                add_option.value = list;
+                goblet.appendChild(add_option);
+            }
+        }
+
+        function change_sets() {
+            var sets = document.getElementById("sets");
+            while (sets.firstChild) {
+                sets.removeChild(sets.firstChild);
+            }
+            for (var i = 0; i < set_types.length; i++) {
+                var list = set_types[i];
+                var add_option = document.createElement("option");
+                add_option.textContent = list;
+                add_option.value = list;
+                sets.appendChild(add_option);
+            }
+        }
+    </script>
+    <br>
+    <div class="red-alert">
+        {% if error %}
+            {{ error }}
+        {% endif %}
+    </div>
+    <div class="green-alert">
+        {% if value %}
+            {{ value }}
+        {% endif %}
+    </div>
+
+{% endblock %}

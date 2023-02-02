@@ -1,0 +1,1 @@
+SELECT SUM(energy) / COUNT(name) FROM songs;

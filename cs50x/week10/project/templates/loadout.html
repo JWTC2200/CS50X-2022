@@ -1,0 +1,573 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Loadout
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form action="/loadout" method="post">
+            <div class="input-group">
+                <select class="form-control mx-auto w-auto" id="char-selector" name="char-selector" type="text" onchange="enablesubmit()">
+                    <option value="" disabled selected>Choose a character</option>
+                    <option value="Ganyu">Ganyu</option>
+                    <option value="Yae Miko">Yae Miko</option>
+                </select>
+                <input id="submit" type="submit" disabled value="Submit"></input>
+            </div>
+        </form>
+        <div class="container" id="stat-block" hidden>
+            <div class="row">
+                <div class="col" id="char-image">
+                    <select class="form-select" id="level-selector" name="level-selector" onchange="stat_update(), show('showhide')">
+                        <option value="" disabled selected>Level</option>
+                        {% if character_stats != 0 %}
+                            {% set count = namespace(value=0) %}
+                            {% for rows in character_stats %}
+                                <option value={{count.value}}>Level {{rows["level"]}}</option>
+                                {% set count.value = count.value + 1 %}
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-10">
+                    <table class="table table-striped table-dark" id="stat_table">
+                        <tr>
+                            <th>Health</th>
+                            <th>Defence</th>
+                            <th>Attack</th>
+                            <th>Elemental Mastery</th>
+                        </tr>
+                        <tr>
+                            <td id="cs_hp">0</td>
+                            <td id="cs_def">0</td>
+                            <td id="cs_atk">0</td>
+                            <td id="cs_em">0</td>
+                        </tr>
+                        <tr>
+                            <th>Crit Rate</th>
+                            <th>Crit Damage</th>
+                            <th>Energy Recharge</th>
+                            <th>Healing Bonus</th>
+                        </tr>
+                        <tr>
+                            <td id="cs_cr">0</td>
+                            <td id="cs_cd">0</td>
+                            <td id="cs_er">0</td>
+                            <td id="cs_hl">0</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="showhide" hidden>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" id="weapon-selector" onchange="stat_update()">
+                            <option value="" disabled selected>Weapon</option>
+                            {% if weapons != 0 %}
+                                {% set count = namespace(value=0) %}
+                                {% for rows in weapons %}
+                                    <option value={{count.value}}>{{rows["name"]}}</option>
+                                    {% set count.value = count.value + 1 %}
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-8" id="weapon-text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">Slot</div>
+                    <div class="col-8"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="flower-selected" data-bs-toggle="dropdown" aria-expanded="false">Flower</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                {% for row in index if row["Slot"] == "Flower" %}
+                                    <li>
+                                        <table class="loadtable dropdown-item" id='{{row["Id"]}}' onclick='equip(this, "flower-slot"), stat_update()'>
+                                            <tr>
+                                                <td>{{ row["Sub1"][0] }}</td>
+                                                <td>{{ row["Sub1"][1] }}</td>
+                                                <td>{{ row["Main Stat"] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub2"][0] }}</td>
+                                                <td>{{ row["Sub2"][1] }}</td>
+                                                <td rowspan="2" class="loadtable_middle">{{ row["Main Value" ]}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub3"][0] }}</td>
+                                                <td>{{ row["Sub3"][1] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub4"][0] }}</td>
+                                                <td>{{ row["Sub4"][1] }}</td>
+                                                <td>{{ row["Set"] }}</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div >
+                            <table class="table loadtable table-dark" id="flower-slot">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="feather-selected" data-bs-toggle="dropdown" aria-expanded="false">Feather</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                {% for row in index if row["Slot"] == "Feather" %}
+                                    <li>
+                                        <table class="loadtable dropdown-item" id='{{row["Id"]}}' onclick='equip(this, "feather-slot"), stat_update()'>
+                                            <tr>
+                                                <td>{{ row["Sub1"][0] }}</td>
+                                                <td>{{ row["Sub1"][1] }}</td>
+                                                <td>{{ row["Main Stat"] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub2"][0] }}</td>
+                                                <td>{{ row["Sub2"][1] }}</td>
+                                                <td rowspan="2" class="loadtable_middle">{{ row["Main Value" ]}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub3"][0] }}</td>
+                                                <td>{{ row["Sub3"][1] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub4"][0] }}</td>
+                                                <td>{{ row["Sub4"][1] }}</td>
+                                                <td>{{ row["Set"] }}</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div >
+                            <table class="table loadtable table-dark" id="feather-slot">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="flower-selected" data-bs-toggle="dropdown" aria-expanded="false">Sands</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                {% for row in index if row["Slot"] == "Sands" %}
+                                    <li>
+                                        <table class="loadtable dropdown-item" id='{{row["Id"]}}' onclick='equip(this, "sands-slot"), stat_update()'>
+                                            <tr>
+                                                <td>{{ row["Sub1"][0] }}</td>
+                                                <td>{{ row["Sub1"][1] }}</td>
+                                                <td>{{ row["Main Stat"] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub2"][0] }}</td>
+                                                <td>{{ row["Sub2"][1] }}</td>
+                                                <td rowspan="2" class="loadtable_middle">{{ row["Main Value" ]}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub3"][0] }}</td>
+                                                <td>{{ row["Sub3"][1] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub4"][0] }}</td>
+                                                <td>{{ row["Sub4"][1] }}</td>
+                                                <td>{{ row["Set"] }}</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div >
+                            <table class="table loadtable table-dark" id="sands-slot">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="flower-selected" data-bs-toggle="dropdown" aria-expanded="false">Goblet</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                {% for row in index if row["Slot"] == "Goblet" %}
+                                    <li>
+                                        <table class="loadtable dropdown-item" id='{{row["Id"]}}' onclick='equip(this, "goblet-slot"), stat_update()'>
+                                            <tr>
+                                                <td>{{ row["Sub1"][0] }}</td>
+                                                <td>{{ row["Sub1"][1] }}</td>
+                                                <td>{{ row["Main Stat"] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub2"][0] }}</td>
+                                                <td>{{ row["Sub2"][1] }}</td>
+                                                <td rowspan="2" class="loadtable_middle">{{ row["Main Value" ]}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub3"][0] }}</td>
+                                                <td>{{ row["Sub3"][1] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub4"][0] }}</td>
+                                                <td>{{ row["Sub4"][1] }}</td>
+                                                <td>{{ row["Set"] }}</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div >
+                            <table class="table loadtable table-dark" id="goblet-slot">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="flower-selected" data-bs-toggle="dropdown" aria-expanded="false">Circlet</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                {% for row in index if row["Slot"] == "Circlet" %}
+                                    <li>
+                                        <table class="loadtable dropdown-item" id='{{row["Id"]}}' onclick='equip(this, "circlet-slot"), stat_update()'>
+                                            <tr>
+                                                <td>{{ row["Sub1"][0] }}</td>
+                                                <td>{{ row["Sub1"][1] }}</td>
+                                                <td>{{ row["Main Stat"] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub2"][0] }}</td>
+                                                <td>{{ row["Sub2"][1] }}</td>
+                                                <td rowspan="2" class="loadtable_middle">{{ row["Main Value" ]}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub3"][0] }}</td>
+                                                <td>{{ row["Sub3"][1] }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ row["Sub4"][0] }}</td>
+                                                <td>{{ row["Sub4"][1] }}</td>
+                                                <td>{{ row["Set"] }}</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div >
+                            <table class="table loadtable table-dark" id="circlet-slot">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // lists from db
+
+        const characterSTATS = {{character_stats|safe}};
+        const character = '{{character|safe}}';
+        const itemLIST = {{item_list|safe}};
+        const itemSTATS = {{index|safe}};
+        const weaponSTATS = {{weapons|safe}};
+        const slot_names = ["flower-slot", "feather-slot", "sands-slot", "goblet-slot", "circlet-slot"];
+
+        const image_loc = [
+            ["Yae Miko", "static/images/Char_YaeMiko.jpg", "Yae Miko Character Card"],
+            ["Ganyu", "static/images/Char_Ganyu.jpg", "Ganyu Character Card"],
+        ]
+
+        window.onload = addimage(), itemLIST.forEach(subperadd);
+
+        // adds character image once character is selected
+        function addimage() {
+            let pic = document.getElementById("char-image");
+            if (character != 0) {
+                var image = document.createElement("img");
+                for (i = 0; i < image_loc.length; i++) {
+                    if (image_loc[i][0] == character) {
+                        image.src = image_loc[i][1];
+                        image.alt = image_loc[i][2];
+                        image.classList.add("char-image");
+                    }
+                }
+                pic.appendChild(image);
+                show('stat-block');
+
+            }
+            console.log(character);
+        }
+
+        function show(block) {
+            document.getElementById(block).hidden = false;
+        }
+
+        function enablesubmit() {
+            sub = document.getElementById("submit");
+            sub.disabled = false;
+        }
+
+        function subperadd (item) {
+            const table = document.getElementById(item);
+            if (table != null) {
+                for (i = 0; i < table.rows.length; i++) {
+                    let sub = table.rows[i].cells[0].innerHTML;
+                    if (sub.includes("%") || sub.includes("Crit") || sub.includes("Energy"))  {
+                        table.rows[i].cells[1].innerHTML += "%";
+                    }
+                let main = table.rows[0].cells[2].innerHTML;
+                if (main.includes("%") || main.includes("Crit") || main.includes("Energy")) {
+                    main += "%";
+                }
+                }
+            }
+        }
+
+        function equip(itemID, slot) {
+            let ID = itemID.id
+            const table = document.getElementById(slot);
+            let NUM = 0
+            for (i = 0; i < itemSTATS.length; i++) {
+                if (itemSTATS[i]["Id"] == ID) {
+                    NUM = i;
+                }
+            }
+            table.rows[0].cells[0].innerHTML = itemSTATS[NUM]["Main Stat"];
+            table.rows[1].cells[0].innerHTML = itemSTATS[NUM]["Main Value"];
+            table.rows[0].cells[1].innerHTML = itemSTATS[NUM]["Sub1"][0];
+            table.rows[1].cells[1].innerHTML = itemSTATS[NUM]["Sub1"][1];
+            table.rows[0].cells[2].innerHTML = itemSTATS[NUM]["Sub2"][0];
+            table.rows[1].cells[2].innerHTML = itemSTATS[NUM]["Sub2"][1];
+            table.rows[0].cells[3].innerHTML = itemSTATS[NUM]["Sub3"][0];
+            table.rows[1].cells[3].innerHTML = itemSTATS[NUM]["Sub3"][1];
+            table.rows[0].cells[4].innerHTML = itemSTATS[NUM]["Sub4"][0];
+            table.rows[1].cells[4].innerHTML = itemSTATS[NUM]["Sub4"][1];
+            // add %
+            for (i = 0; i < 5; i++) {
+                let x = table.rows[0].cells[i].innerHTML;
+                if (x.includes("%") || x.includes("Crit") || x.includes("Energy")) {
+                    table.rows[1].cells[i].innerHTML += "%";
+                }
+            }
+        }
+
+        function stat_update() {
+
+            // initial values
+            var health = 0;
+            var health_per = 1;
+            var defence = 0;
+            var defence_per = 1;
+            var attack = 0;
+            var attack_per = 1;
+            var em = 0;
+            var critrate = 0;
+            var critdam = 0;
+            var energy = 0;
+            var healing = 0;
+            var base_attack = 0;
+
+            // find character level add to base attack
+            var level = document.getElementById("level-selector").value;
+            base_attack += parseFloat(characterSTATS[level]["attack"]);
+
+            // check characters unique bonus and store
+            var bonus_stat = characterSTATS[level]["type"];
+            var bonus_value = characterSTATS[level]["bonus"];
+            if (bonus_stat == "Crit Rate") {
+                critrate += parseFloat(bonus_value);
+            }
+            if (bonus_stat == "Crit Damage") {
+                critdam += parseFloat(bonus_value);
+            }
+
+            var w_id = document.getElementById("weapon-selector").value;
+
+            // check weapon check number never negative insert into HTML
+            if (level != "" && w_id != "") {
+                var weapontext = document.getElementById("weapon-text");
+                var wms = weaponSTATS[w_id];
+                weapontext.innerHTML = wms["name"] + ", Base Attack: " + wms["base"] + ", Main Stat: " + wms["mainstat"] + " " + wms["mainvalue"] + "%";
+                base_attack += parseFloat(wms["base"])
+                if (wms["mainstat"] == "Crit Rate") {
+                    critrate += parseFloat(wms["mainvalue"]);
+                }
+                if (wms["mainstat"] == "Crit Damage") {
+                    critdam += parseFloat(wms["mainvalue"]);
+                }
+                if (wms["mainstat"] == "Attack%") {
+                    attack_per += parseFloat(wms["mainvalue"]) / 100;
+                }
+                if (wms["substat"] == "Crit Damage") {
+                    critdam += parseFloat(wms["mainvalue"]);
+                }
+                // Crit Damage is dupilicated but as its the only one in this example I felt it uncessary to create an array and loop.
+            }
+
+
+            // loop to check all artifact slots for stat types and values
+            if (level != "") {
+                const y = slot_names.length;
+                const x = document.getElementById("circlet-slot").rows[0].cells[0].innerHTML;
+                for (i = 0; i < slot_names.length; i++) {
+                    let slot = document.getElementById(slot_names[i]);
+                    for (j = 0; j < slot.rows[0].cells.length; j++) {
+                        var stat_name = slot.rows[0].cells[j].innerHTML;
+                        var stat_value = slot.rows[1].cells[j].innerHTML;
+                        if (stat_name != "") {
+                            let floatv = parseFloat(stat_value);
+                            if (stat_name == "Health") {
+                                health += floatv;
+                            }
+                            if (stat_name == "Health%") {
+                                health_per += floatv / 100;
+                            }
+                            if (stat_name == "Defence") {
+                                defence += floatv;
+                            }
+                            if (stat_name == "Defence%") {
+                                defence_per += floatv / 100;
+                            }
+                            if (stat_name == "Attack") {
+                                attack += floatv;
+                            }
+                            if (stat_name == "Attack%") {
+                                attack_per += floatv / 100;
+                            }
+                            if (stat_name == "Elemental Mastery") {
+                                em += floatv;
+                            }
+                            if (stat_name == "Crit Rate") {
+                                critrate += floatv;
+                            }
+                            if (stat_name == "Crit Damage") {
+                                critdam += floatv;
+                            }
+                            if (stat_name == "Energy Recharge") {
+                                energy += floatv;
+                            }
+                            if (stat_name == "Healing Bonus") {
+                                healing += floatv;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // final values
+            let total_health = (parseFloat(characterSTATS[level]["health"]) * parseFloat(health_per)) + parseFloat(health);
+            let total_defence = (parseFloat(characterSTATS[level]["defence"])) * parseFloat(defence_per) + parseFloat(defence);
+            let total_attack = ((base_attack) * parseFloat(attack_per)) + parseFloat(attack);
+            let total_elemast = em;
+            let total_critrate = parseFloat(characterSTATS[level]["critrate"]) + parseFloat(critrate);
+            let total_critdam = parseFloat(characterSTATS[level]["critdam"]) + parseFloat(critdam);
+            let total_energy = energy;
+            let total_healing = healing;
+
+
+            // replace HTML. Seperated from above to be easier to adjust if needed.
+            document.getElementById("cs_hp").innerHTML = Math.round(total_health);
+            document.getElementById("cs_def").innerHTML = Math.round(total_defence);
+            document.getElementById("cs_atk").innerHTML = Math.round(total_attack);
+            document.getElementById("cs_em").innerHTML = Math.round(total_elemast);
+            document.getElementById("cs_cr").innerHTML = Math.round(total_critrate) + "%";
+            document.getElementById("cs_cd").innerHTML = Math.round(total_critdam) + "%";
+            document.getElementById("cs_er").innerHTML = Math.round(total_energy) + "%";
+            document.getElementById("cs_hl").innerHTML = Math.round(total_healing) + "%";
+        }
+    </script>
+{% endblock %}

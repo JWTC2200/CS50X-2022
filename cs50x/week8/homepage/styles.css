@@ -1,0 +1,89 @@
+
+.header {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center
+}
+div {
+    border-style: soid;
+}
+.center {
+    text-align: center;
+}
+.logo_button {
+    border-style: solid;
+}
+.nav_back {
+    background-color: rgba(0,0,0,0.8);
+}
+.p_back {
+    background-color: rgba(22, 61, 73, 0.65);
+    color: aliceblue;
+}
+.page_title {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.genshin_bg {
+    background-image: url("/Images/genshin_wp.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.genshin_bg .char_img {
+    float: right;
+    height: 250px;
+    border: 5px inset skyblue;
+}
+#yelan {
+    display: none;
+}
+#yae_miko {
+    display: none;
+}
+.genshin_bg h2 {
+    color: rgb(33, 161, 235);
+}
+.genshin_bg button {
+    color:black;
+    background-color: skyblue;
+}
+.genshin_bg hr {
+    border-top: 5px solid;
+    border-radius: 2px;
+}
+.dota2_bg {
+    background-image: url("/Images/Dota_wp.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.table {
+    color: white;
+}
+.dota_skill_icon {
+    height: 100px;
+    border: 4px inset skyblue;
+}
+.nyx_icon {
+    height: 125px;
+    float: left;
+    margin: 5px;
+    border: 5px inset skyblue;
+}
+.aoe2_bg {
+    background-image: url("/Images/aoe2_wp.jpg");
+    background-size: cover;
+    background-position: center;
+}
+a:link, .link_red {
+    color: pink;
+}
+a:visited, .link_red {
+    color: green;
+}
+.tiny_icon {
+    height: 18px;
+}
+.briton_icon {
+    height: 100px;
+    float: left;
+    margin: 5px;
+}
